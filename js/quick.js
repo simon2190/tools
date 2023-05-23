@@ -1,33 +1,39 @@
 // gray
-javascript: $("html").css(
-  "filter",
-  $("html").css("filter") == "none" ? "grayscale(1)" : "none"
-);
-
-// scale img
-javascript: $("img").css("width", "20%");
-
-// scal2 img
-javascript: $("img").width((index, width) => 0.2 * width);
-$("img").height((index, height) => 0.2 * height);
-$("*").css("background-image", "none");
+javascript: var root = document.documentElement;
+if (root.style.getPropertyValue("filter") == "none") {
+  root.style.setProperty("filter", "grayscale(1)");
+} else {
+  root.style.setProperty("filter", "none");
+}
 
 // img
-javascript: setInterval(function () {
-  $("img").attr("src", "none");
-  $("*").css("background-image", "none");
-}, 500);
-
-// img
-javascript: setInterval(function () {
-  $("img").each(function () {
-    if ($(this).css("background-image") !== "none") {
-      $(this).css("background-image", "none");
-    }
+javascript: setInterval(() => {
+  document.querySelectorAll("img").forEach((img) => {
+    if (img.src) img.removeAttribute("src");
   });
-  $("img").each(function () {
-    if ($(this).attr("src") !== "none") {
-      $(this).attr("src", "none");
-    }
+  document.querySelectorAll("div").forEach((e) => {
+    if (getComputedStyle(e).backgroundImage != "none")
+      e.style.backgroundImage = "none";
   });
 }, 100);
+
+// small img
+javascript: document.querySelectorAll("img").forEach(function (img) {
+  img.width = img.width / 2;
+  img.height = img.height / 2;
+});
+
+// big img
+javascript: document.querySelectorAll("img").forEach(function (img) {
+  img.width = img.width * 2;
+  img.height = img.height * 2;
+});
+
+///////////////////////
+//        UDF
+///////////////////////
+setInterval(() => {
+  document.querySelectorAll("img").forEach((img) => {
+    if (img.src) img.removeAttribute("src");
+  });
+}, 10);
